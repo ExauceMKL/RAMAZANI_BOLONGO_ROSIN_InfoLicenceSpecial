@@ -1,1 +1,58 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historique des Ventes</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ✅ Menu commun -->
+  <div class="sidebar">
+    <h2>Mon Magasin</h2>
+    <ul>
+      <li><a href="dashboard.html">🏠 Tableau de Bord</a></li>
+      <li><a href="produits.html">📦 Produits</a></li>
+      <li><a href="ventes.html">🛒 Ventes</a></li>
+      <li><a href="clients.html">👥 Clients</a></li>
+      <li><a href="historique.html">📜 Historique</a></li>
+    </ul>
+  </div>
+
+  <!-- ✅ Contenu -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Historique des Ventes</h1>
+      <button class="logout-btn" onclick="logout()">Se Déconnecter</button>
+    </div>
+
+    <p>Bienvenue sur la page d'historique. Vous trouverez ci-dessous toutes les ventes enregistrées :</p>
+
+    <!-- ✅ Exemple de tableau -->
+    <table border="1" cellpadding="8" style="margin-top: 20px; border-collapse: collapse; width: 100%;">
+      <tr style="background: #2980b9; color: white;">
+        <th>Date</th>
+        <th>Produit</th>
+        <th>Quantité</th>
+        <th>Total (€)</th>
+      </tr>
+      <tr>
+        <td>2025-08-01</td>
+        <td>Produit A</td>
+        <td>2</td>
+        <td>40</td>
+      </tr>
+      <tr>
+        <td>2025-08-01</td>
+        <td>Produit B</td>
+        <td>1</td>
+        <td>25</td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>
