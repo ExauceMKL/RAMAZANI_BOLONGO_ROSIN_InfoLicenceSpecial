@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestion des Clients | Gestion de Vente</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    table th, table td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    table th {
+      background: #2c3e50;
+      color: white;
+    }
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-add { background: #27ae60; color: white; margin-bottom: 10px; }
+    .btn-edit { background: #2980b9; color: white; }
+    .btn-delete { background: #e74c3c; color: white; }
+
+    /* Formulaire popup */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+    }
+    .modal-content h2 {
+      margin-bottom: 15px;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+    }
+    .modal-content button {
+      margin-top: 10px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Menu commun -->
+  <div class="sidebar">
+    <h2>Mon Magasin</h2>
+    <ul>
+      <li><a href="dashboard.html">Tableau de Bord</a></li>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="ventes.html">Ventes</a></li>
+      <li><a href="clients.html">Clients</a></li>
+      <li><a href="historique.html">Historique</a></li>
+    </ul>
+  </div>
+
+  <!-- ✅ Contenu -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Gestion des Clients</h1>
+      <button class="logout-btn" onclick="logout()">Se Déconnecter</button>
+    </div>
+
+    <button class="btn btn-add" onclick="ouvrirFormulaire()">➕ Ajouter un Client</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="clientsTable">
+        <tr>
+          <td>Jean Dupont</td>
+          <td>jean.dupont@example.com</td>
+          <td>+243 810 000 111</td>
+          <td>
+            <button class="btn btn-edit" onclick="editerClient(this)">✏ Modifier</button>
+            <button class="btn btn-delete" onclick="supprimerClient(this)">🗑 Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ✅ Formulaire Ajouter Client -->
+  <div class="modal" id="modalClient">
+    <div class="modal-content">
+      <h2>Ajouter un Client</h2>
+      <input type="text" id="nomClient" placeholder="Nom complet" required />
+      <input type="email" id="emailClient" placeholder="Email" required />
+      <input type="text" id="telClient" placeholder="Téléphone" required />
+      <button class="btn btn-add" onclick="ajouterClient()">Enregistrer</button>
+      <button class="btn btn-delete" onclick="fermerFormulaire()">Annuler</button>
+    </div>
+  </div>
+
+  <script>
+    function ouvrirFormulaire() {
+      document.getElementById("modalClient").style.display = "flex";
+    }
+    function fermerFormulaire() {
+      document.getElementById("modalClient").style.display = "none";
+    }
+
+    function ajouterClient() {
+      const nom = document.getElementById("nomClient").value;
+      const email = document.getElementById("emailClient").value;
+      const tel = document.getElementById("telClient").value;
+
+      if (nom && email && tel) {
+        const table = document.getElementById("clientsTable");
+        const row = table.insertRow();
+
+        row.innerHTML = `
+          <td>${nom}</td>
+          <td>${email}</td>
+          <td>${tel}</td>
+          <td>
+            <button class="btn btn-edit" onclick="editerClient(this)">✏ Modifier</button>
+            <button class="btn btn-delete" onclick="supprimerClient(this)">🗑 Supprimer</button>
+          </td>
+        `;
+
+        fermerFormulaire();
+        document.getElementById("nomClient").value = "";
+        document.getElementById("emailClient").value = "";
+        document.getElementById("telClient").value = "";
+      } else {
+        alert("Veuillez remplir tous les champs !");
+      }
+    }
+
+    function editerClient(btn) {
+      alert("Fonction de modification à implémenter !");
+    }
+
+    function supprimerClient(btn) {
+      if (confirm("Voulez-vous vraiment supprimer ce client ?")) {
+        btn.parentElement.parentElement.remove();
+      }
+    }
+  </script>
+
+</body>
+</html>

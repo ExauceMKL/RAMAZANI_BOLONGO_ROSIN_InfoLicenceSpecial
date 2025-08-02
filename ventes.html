@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestion des Ventes</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    form select, form input {
+      padding: 10px;
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      padding: 10px 15px;
+      background: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #21618c;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    table th {
+      background: #2c3e50;
+      color: white;
+    }
+    .success {
+      color: green;
+      margin-bottom: 10px;
+    }
+    .error {
+      color: red;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+    <!-- ✅ Sidebar -->
+ <div class="sidebar">
+    <h2>Mon Magasin</h2>
+    <ul>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="ventes.html">Ventes</a></li>
+      <li><a href="clients.html">Clients</a></li>
+      <li><a href="historique.html">Historique</a></li>
+      
+    </ul>
+  </div>
+
+  <div class="container">
+    <h1>🛒 Gestion des Ventes</h1>
+
+    <p id="message"></p>
+
+    <!-- ✅ Formulaire d'enregistrement d'une vente -->
+    <form id="saleForm">
+      <select id="productSelect" required></select>
+      <input type="number" id="quantity" placeholder="Quantité" min="1" required />
+      <button type="submit">Enregistrer Vente</button>
+    </form>
+
+    <!-- ✅ Tableau des ventes -->
+    <table>
+      <thead>
+        <tr>
+          <th>Produit</th>
+          <th>Quantité</th>
+          <th>Prix Total</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="salesTable"></tbody>
+    </table>
+  </div>
+
+  <script>
+    // ✅ Produits disponibles (normalement importés depuis la base de données)
+    let products = [
+      { name: "Pain", price: 500, stock: 20 },
+      { name: "Lait", price: 1000, stock: 10 },
+      { name: "Sucre", price: 800, stock: 15 }
+    ];
+
+    let sales = [];
+
+    const productSelect = document.getElementById("productSelect");
+    const saleForm = document.getElementById("saleForm");
+    const salesTable = document.getElementById("salesTable");
+    const message = document.getElementById("message");
+
+    // ✅ Remplir la liste déroulante des produits
+    function loadProducts() {
+      productSelect.innerHTML = "";
+      products.forEach((p, index) => {
+        productSelect.innerHTML += `<option value="${index}">${p.name} (Stock: ${p.stock})</option>`;
+      });
+    }
+
+    // ✅ Afficher les ventes
+    function renderSales() {
+      salesTable.innerHTML = "";
+      sales.forEach(s => {
+        salesTable.innerHTML += `
+          <tr>
+            <td>${s.product}</td>
+            <td>${s.quantity}</td>
+            <td>${s.total} FC</td>
+            <td>${s.date}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // ✅ Gérer l'enregistrement de la vente
+    saleForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const index = parseInt(productSelect.value);
+      const quantity = parseInt(document.getElementById("quantity").value);
+
+      if (quantity <= 0) {
+        message.textContent = "❌ La quantité doit être supérieure à 0.";
+        message.className = "error";
+        return;
+      }
+
+      if (quantity > products[index].stock) {
+        message.textContent = "❌ Stock insuffisant pour ce produit.";
+        message.className = "error";
+        return;
+      }
+
+      // ✅ Mise à jour du stock
+      products[index].stock -= quantity;
+
+      // ✅ Calcul du total
+      const total = products[index].price * quantity;
+
+      // ✅ Ajouter la vente
+      sales.push({
+        product: products[index].name,
+        quantity: quantity,
+        total: total,
+        date: new Date().toLocaleString()
+      });
+
+      message.textContent = "✅ Vente enregistrée avec succès !";
+      message.className = "success";
+
+      loadProducts();
+      renderSales();
+      saleForm.reset();
+    });
+
+    loadProducts();
+    renderSales();
+  </script>
+
+</body>
+</h

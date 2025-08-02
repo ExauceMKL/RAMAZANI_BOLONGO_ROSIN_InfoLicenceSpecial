@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestion des Produits</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <!-- ✅ Sidebar -->
+ <div class="sidebar">
+    <h2>Mon Magasin</h2>
+    <ul>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="ventes.html">Ventes</a></li>
+      <li><a href="clients.html">Clients</a></li>
+      <li><a href="historique.html">Historique</a></li>
+      
+    </ul>
+  </div>
+
+  <div class="container">
+    <h1>📦 Gestion des Produits</h1>
+
+    <!-- ✅ Formulaire d'ajout -->
+    <form id="productForm">
+      <input type="text" id="name" placeholder="Nom du produit" required />
+      <input type="number" id="price" placeholder="Prix" required />
+      <input type="number" id="stock" placeholder="Stock" required />
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <!-- ✅ Tableau des produits -->
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prix</th>
+          <th>Stock</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="productTable">
+        <!-- Les produits s'afficheront ici -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const productForm = document.getElementById("productForm");
+    const productTable = document.getElementById("productTable");
+
+    // ✅ Exemple de produits de base
+    let products = [
+      { name: "Pain", price: 500, stock: 20 },
+      { name: "Lait", price: 1000, stock: 10 },
+    ];
+
+    // ✅ Afficher les produits dans le tableau
+    function renderProducts() {
+      productTable.innerHTML = "";
+      products.forEach((p, index) => {
+        const row = `<tr>
+          <td>${p.name}</td>
+          <td>${p.price} FC</td>
+          <td>${p.stock}</td>
+          <td><button class="delete-btn" onclick="deleteProduct(${index})">Supprimer</button></td>
+        </tr>`;
+        productTable.innerHTML += row;
+      });
+    }
+
+    // ✅ Supprimer un produit
+    function deleteProduct(index) {
+      products.splice(index, 1);
+      renderProducts();
+    }
+
+    // ✅ Ajouter un produit
+    productForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const price = parseInt(document.getElementById("price").value);
+      const stock = parseInt(document.getElementById("stock").value);
+
+      products.push({ name, price, stock });
+      renderProducts();
+      productForm.reset();
+    });
+
+    renderProducts();
+  </script>
+
+</body>
+</html>

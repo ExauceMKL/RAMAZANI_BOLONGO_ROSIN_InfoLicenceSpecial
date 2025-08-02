@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tableau de Bord | Gestion de Vente</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  
+</head>
+<body>
+  <!-- ✅ Sidebar -->
+ <div class="sidebar">
+    <h2>Mon Magasin</h2>
+    <ul>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="ventes.html">Ventes</a></li>
+      <li><a href="clients.html">Clients</a></li>
+      <li><a href="historique.html">Historique</a></li>
+      
+    </ul>
+  </div>
+
+  <!-- ✅ Contenu -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Tableau de Bord</h1>
+      <button class="logout-btn" onclick="logout()">Se Déconnecter</button>
+    </div>
+
+    <!-- ✅ Cartes statistiques -->
+    <div class="cards">
+      <div class="card">
+        <h3>Ventes du Jour</h3>
+        <p id="ventesJour">15</p>
+      </div>
+      <div class="card">
+        <h3>Produits en Stock</h3>
+        <p id="stock">120</p>
+      </div>
+      <div class="card">
+        <h3>Nombre de Clients</h3>
+        <p id="clients">35</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      alert("Déconnexion réussie !");
+      window.location.href = "login.html"; // Retour à la page de connexion
+    }
+  </script>
+</body>
+</html>
